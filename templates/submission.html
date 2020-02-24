@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <meta content="description" name="description">
+  <meta name="google" content="notranslate" />
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="./static/assets/apple-icon-180x180.png">
+  <link href="./static/assets/newfavicon.ico" rel="icon">
+
+  <title>Property Rental Rate Calculator</title>  
+
+<link href="./static/main.3f6952e4.css" rel="stylesheet"></head>
+
+<body class="">
+<div id="site-border-left"></div>
+<div id="site-border-right"></div>
+<div id="site-border-top"></div>
+<div id="site-border-bottom"></div>
+<!-- Add your content of header -->
+<font face='verdana'>
+<div class="section-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="./static/assets/images/house.jpg" class="img-responsive" alt="">
+          <div class="text-center">
+            <h1 class="h2">CA-roperty Rental Rate Calculator</h1>
+          </div>
+          
+          
+          <p>Hello this calculator predicts your optimal rental rate for your property 
+            based on attributes of your property and your
+             <a href="https://www.towncharts.com/California/Housing/Los-Angeles-city-CA-Housing-data.html" target="_blank">
+            <b>city real estate market</b></a> in <b>California</b>. It  can be used for 3 types of housing units a House, Mobile Home, or Condominium.
+            Calculations are made using a Machine Learning Model (Ensemble Learning model) the code can be found <a href="https://github.com/clazaro97chosen/California_Housing_Project" target="_blank">
+            <b>here</b></a> as well as a Story about Applicable Results, Visualizations, and a Written Report<br><i>*If you do not know certain information do not worry. The median/average value for any variable down below for a given city can be found <a href="./info.html" target="_blank">
+              <b>here</b></a> as well as the median earnings for a worker in your city.*</i>
+          <br> <b>The calculation will be shown at the end of the form</b> </p>
+
+          <form action="{{ url_for('main') }}" method="POST">
+            <fieldset>
+                <legend>Input values:</legend>
+                city-Enter Your City:
+                <input name="city" type="text" value="{{city}}" required>
+                <br><br>
+                med_owner_cost-(Mortgage Owner) Monthly cost of housing including mortgage payment, taxes, insurance,and utilities $:
+                <input name="med_owner_cost" type="number" value={{med_owner_cost}} step=.01 required>
+                <br><br> 
+                med_hcost_own_wo_mortg-(No Mortgage) Monthly cost of housing including taxes, insurance,and utilities $:
+                <input name="med_hcost_own_wo_mortg" type="number" value={{med_hcost_own_wo_mortg}} step=.01 required>
+                <br><br>
+                hcost_aspercentof_hincome_ownmortg-(Mortgage Owner) Monthly $ cost of housing including mortgage payment, taxes, insurance,and utilities as a percent of the household income % :
+                <input name="hcost_aspercentof_hincome_ownmortg" type="number" value={{hcost_aspercentof_hincome_ownmortg}} step=.01 required>
+                <br><br>
+                hcost_as_perc_of_hincome_womortg-(No Mortgage) Monthly $ cost of housing taxes, insurance,and utilities as a percent of the household income % :
+                <input name="hcost_as_perc_of_hincome_womortg" type="number" value={{hcost_as_perc_of_hincome_womortg}} step=.01 required>
+                <br><br>
+                med_hval_aspercentof_medearn-How much the property is worth(house and lot, mobile home and lot, or condominium unit) if it was for sale as a percent of the median earnings for a worker in the city %:
+                <input name="med_hval_aspercentof_medearn" type="number" value={{med_hval_aspercentof_medearn}} step=.01 required>
+                <br><br>
+                med_real_estate_taxes -Annual Real Estate taxes paid $:
+                <input name="med_real_estate_taxes" type="number" value={{med_real_estate_taxes}} step=.01 required>
+                <br><br>
+                med_homeval-How much property is worth(house and lot,mobile home and lot,or condominium unit) if it was for sale $: 
+                <input name="med_homeval" type="number" value={{med_homeval}} step=.01 required>
+                <br><br>
+                median_year_house_built-Year the housing unit was built:
+                <input name="median_year_house_built" type="number" value={{median_year_house_built}} required>
+                <br><br>
+                median_num_ofrooms-Number of rooms for housing unit:
+                <input name="median_num_ofrooms" type="number" value={{median_num_ofrooms}}  required>
+                <br><br>
+                <p>city housing market info></p>
+                <br>
+                family_members_per_hunit-The average family size in a housing unit in your city:
+                <input name="family_members_per_hunit" type="number" value={{family_members_per_hunit}} step=.01 required>
+                <br><br>
+                household_size_of_howners-For people who own their homes how many people on average are living in them 
+                whether they are part of family or related or not in your city:
+                <input name="household_size_of_howners" type="number" value={{household_size_of_howners}} step=.01 required>
+                <br><br>
+                household_size_for_renters-The average size of a household for people who are renting in your city:
+                <input name="household_size_for_renters" type="number" value={{household_size_for_renters}} step=.01 required>
+                <br><br>
+                med_year_renter_moved_in-The Median year that a renter moved into their housing unit in your city:
+                <input name="med_year_renter_moved_in" type="number" value={{med_year_renter_moved_in}} step=.01 required>
+                <br><br>
+                med_year_moved_in_for_owners-The median year that a home owner moved into their home in your city:
+                <input name="med_year_moved_in_for_owners" type="number" value={{med_year_moved_in_for_owners}} required>
+                <br><br>
+                housing_units-Total number of housing units in your city:
+                <input name="housing_units" type="number" value={{housing_units}}  required>
+                <br><br>
+                owned_homes-The percent of all occupied housing units that are owned housing units in your city %:
+                <input name="owned_homes" type="number" value={{owned_homes}} step=.01 required>
+                <br><br>
+                rent_home_percent-The percent of all occupied housing units that are rental housing units in your city %:
+                <input name="rent_home_percent" type="number" value= {{rent_home_percent}} step=.01 required>
+                <br><br>
+                housing_density-The number of housing units per square mile in your city:
+                <input name="housing_density" type="number" value={{housing_density}} required>
+                <br><br>
+                area_total_sq_mi-The total area of your city in square miles: 
+                <input name="area_total_sq_mi" type="number" value={{area_total_sq_mi}} step=.01 required>
+                <br><br>
+                population- The population of the city:
+                <input name="population" type="number" value={{population}} required>
+                <br><br>
+                The current Rental Rate for your property:
+                <input name="user_rental_rate" type="number" value={{user_rental_rate}} required>
+                <br><br>
+                <input type="submit" value="Predict">
+                
+            </fieldset>
+        </form>
+        <br>
+        <div class="text-center">
+          <h1 class="h2">Calculation Will Be Shown Below</h1>
+        </div>
+<div class="result" align="center">
+    {% if result %}
+    	<br> Rental Rate for Your Property:
+   		<p style="font-size:30px">${{ result }}</p>
+    {% endif %}
+</div>
+    </div>
+    </div>
+  </div>
+</div>
+<div id="viewpoint">
+  {% if scroll %}
+  <script>
+      document.getElementById('{{ scroll }}').scrollIntoView();
+  </script>
+  {% endif %}
+
+<footer class="footer-container text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>© Cristian Lazaro 2020</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</font>
+<script>
+  document.addEventListener("DOMContentLoaded", function (event) {
+     navActivePage();
+  });
+</script>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID 
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-XXXXX-X', 'auto');
+  ga('send', 'pageview');
+</script>
+
+--> <script type="text/javascript" src="./static/main.70a66962.js"></script>
+
+</body>
+
+</html>
